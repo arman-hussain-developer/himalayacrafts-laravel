@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'Admin Panel')</title>
+    @vite('resources/css/app.css')
+    @stack('styles')
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+    <div class="min-h-screen md:flex">
+        <aside class="bg-gray-950 text-white md:min-h-screen md:w-64">
+            <div class="border-b border-white/10 px-6 py-5">
+                <h1 class="text-xl font-semibold">Admin Panel</h1>
+            </div>
+
+            <nav class="space-y-1 px-3 py-4">
+                <a href="{{ route('admin.dashboard') }}" class="block rounded px-3 py-2 text-sm font-medium {{ request()->routeIs('admin.dashboard') ? 'bg-white text-gray-950' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                    Dashboard
+                </a>
+                <a href="{{ route('admin.categories.index') }}" class="block rounded px-3 py-2 text-sm font-medium {{ request()->routeIs('admin.categories.*') ? 'bg-white text-gray-950' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                    Categories
+                </a>
+                <a href="{{ route('admin.sub-categories.index') }}" class="block rounded px-3 py-2 text-sm font-medium {{ request()->routeIs('admin.sub-categories.*') ? 'bg-white text-gray-950' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                    Sub Categories
+                </a>
+                <a href="{{ route('admin.products.index') }}" class="block rounded px-3 py-2 text-sm font-medium {{ request()->routeIs('admin.products.*') ? 'bg-white text-gray-950' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                    Products
+                </a>
+                <a href="{{ route('admin.orders.index') }}" class="block rounded px-3 py-2 text-sm font-medium {{ request()->routeIs('admin.orders.*') ? 'bg-white text-gray-950' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                    Orders
+                </a>
+                <a href="{{ route('admin.enquiries.index') }}" class="block rounded px-3 py-2 text-sm font-medium {{ request()->routeIs('admin.enquiries.*') ? 'bg-white text-gray-950' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                    Product Enquiries
+                </a>
+                <a href="{{ route('admin.bulk-quotes.index') }}" class="block rounded px-3 py-2 text-sm font-medium {{ request()->routeIs('admin.bulk-quotes.*') ? 'bg-white text-gray-950' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                    Bulk Quotes
+                </a>
+                <a href="{{ route('admin.banners.index') }}" class="block rounded px-3 py-2 text-sm font-medium {{ request()->routeIs('admin.banners.*') ? 'bg-white text-gray-950' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                    Banners
+                </a>
+                <a href="{{ route('admin.pages.index') }}" class="block rounded px-3 py-2 text-sm font-medium {{ request()->routeIs('admin.pages.*') ? 'bg-white text-gray-950' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                    CMS Pages
+                </a>
+                <a href="{{ route('admin.menus.index') }}" class="block rounded px-3 py-2 text-sm font-medium {{ request()->routeIs('admin.menus.*') ? 'bg-white text-gray-950' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                    Navigation Menus
+                </a>
+                <a href="{{ route('admin.home-sections.edit') }}" class="block rounded px-3 py-2 text-sm font-medium {{ request()->routeIs('admin.home-sections.*') ? 'bg-white text-gray-950' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                    Home Sections
+                </a>
+                <a href="{{ route('admin.testimonials.index') }}" class="block rounded px-3 py-2 text-sm font-medium {{ request()->routeIs('admin.testimonials.*') ? 'bg-white text-gray-950' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                    Testimonials
+                </a>
+                <a href="{{ route('admin.trust-items.index') }}" class="block rounded px-3 py-2 text-sm font-medium {{ request()->routeIs('admin.trust-items.*') ? 'bg-white text-gray-950' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                    Trust Items
+                </a>
+                <a href="{{ route('admin.brand-logos.index') }}" class="block rounded px-3 py-2 text-sm font-medium {{ request()->routeIs('admin.brand-logos.*') ? 'bg-white text-gray-950' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                    Brand Logos
+                </a>
+                <a href="{{ route('admin.settings.edit') }}" class="block rounded px-3 py-2 text-sm font-medium {{ request()->routeIs('admin.settings.*') ? 'bg-white text-gray-950' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                    Settings
+                </a>
+
+                <form action="{{ route('admin.logout') }}" method="POST" class="pt-3">
+                    @csrf
+                    <button type="submit" class="block w-full rounded px-3 py-2 text-left text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white">
+                        Logout
+                    </button>
+                </form>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-8">
+            @if (session('success'))
+                <div class="mb-5 rounded border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="mb-5 rounded border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    Please fix the highlighted fields and try again.
+                </div>
+            @endif
+
+            @yield('content')
+        </main>
+    </div>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+    <script>
+        document.querySelectorAll('textarea[data-wysiwyg="true"]').forEach((textarea) => {
+            if (! window.ClassicEditor) {
+                return;
+            }
+
+            ClassicEditor.create(textarea, {
+                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo']
+            }).catch(() => {});
+        });
+    </script>
+    @stack('scripts')
+</body>
+</html>
